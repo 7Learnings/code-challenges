@@ -1,0 +1,7 @@
+# credentials
+**/gcloud-credentials.json
+.gitsecret/keys/random_seed
+!*.secret
+
+# notebook checkpoints
+**/.ipynb_checkpoints
