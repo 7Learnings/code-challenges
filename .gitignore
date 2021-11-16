@@ -5,3 +5,6 @@
 
 # notebook checkpoints
 **/.ipynb_checkpoints
+
+# logs
+**/logs
