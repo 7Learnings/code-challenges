@@ -1,3 +1,10 @@
+# How to use
+
+1. Enter directory `datascience`,
+2. Run `poetry install` (install poetry with `pip install poetry` if its not present on your system) 
+3. Run `make notebook`
+4. Open Tensorboard on `localhost:8080` after running the notebook to see the performance of different models.
+
 # 7Learnings Code Challenges
 
 The 7Learnings code challenge is an opportunity to demonstrate proficiency in the problem solving skills we expect you to use at 7Learnings.
