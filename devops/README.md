@@ -23,8 +23,28 @@ table_to_parquet(
 )
 ```
 
+## The Challenge
+
+You are tasked to reduce the network bandwidth while downloading table data (parquet file) to the local storage. To give you a bit of context, the data scientists need to download the data from BigQuery tables to train/eval/test the machine learning models.
+The data we have is often quite huge and it costs money on Google Cloud and take time to download all of them.  That's why we would like you to take deep inspection of our code or find a new way to save the network bandwidth.
+
+Feel the task is too easy? We have a bonus task for you.
+After downloading machine learning data, we need to load it the memory to perform shuffling and splitting into three different data sets (train/eval/test) for the models. It would be nice if splitting and shuffling the data happens when writing to the parquet files.
+
 #### Time Allotment
 
 We respect your time and don't want you spending more 3 hours on your challenge. We just want to get a sense of your thought process and development patterns. If there are features you don't have time to implement, feel free to use pseudo code to describe the intended behavior.
 
+
+## What We Review
+
+Your code will be reviewed by our engineers. The aspects of your code we will judge include:
+
+- ability to get the technical environment set up
+- completion of tasks
+- code cleanness
+- reasoning of the solution
+
+## Submission
+Email a link to a repository with your implementation or zip file with your repository to your 7Learnings contact.
 
