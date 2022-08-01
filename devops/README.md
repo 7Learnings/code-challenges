@@ -29,7 +29,8 @@ You are tasked to reduce the network bandwidth while downloading table data (par
 The data we have is often quite huge and it costs money on Google Cloud and take time to download all of them.  That's why we would like you to take deep inspection of our code or find a new way to save the network bandwidth.
 
 Feel the task is too easy? We have a bonus task for you.
-After downloading machine learning data, we need to load it the memory to perform shuffling and splitting into three different data sets (train/eval/test) for the models. It would be nice if splitting and shuffling the data happens when writing to the parquet files.
+Before training models on that data, we need to load it fully into memory to perform shuffling and splitting into three different data splits (train/eval/test).
+It would be nice if splitting and sorting by the `_data_split` and `_data_shuffle` columns would already happen when when writing to the parquet files, so we could stream it during model training.
 
 #### Time Allotment
 
