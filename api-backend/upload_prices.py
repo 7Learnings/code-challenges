@@ -39,7 +39,8 @@ def upload_prices(credentials: Credentials, data: pd.DataFrame):
             f"{API}/product-prices", headers=headers, json=json_object
         )
         response.raise_for_status()
-
+    upload_url = requests.get(f"{API}/validate-product-prices", headers=headers)
+    print(f"upload.gcs_url: {upload_url.json().get('gcs_upload').get('url')}")
     print("prices successfully uploaded")
 
 
