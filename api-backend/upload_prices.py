@@ -94,15 +94,18 @@ def create_products_list(df):
     return products_list
 
 
-def validate_product_prices(access_token, data):
+def validate_product_prices(access_token):
+    print("\nValidating product prices...")
     try:
         resp = requests.get(
                     f"{API}/validate-product-prices",
                     headers={'accept': 'application/json',
                             'Authorization': f'Bearer {access_token}'}
                 )
-        r = resp.json()
-        print(r["correct_checksum"], r["gcs_upload"])
+        if resp.json()["correct_checksum"]:
+            print("Checksum validation successful!")
+        else:
+            print("Checksum validation failed!")
     except Exception as e:
         print(f"Error validating prices {e}")
         raise
@@ -117,7 +120,7 @@ def main(creds_file, csv_file):
 
         upload_prices(access_token, pd.read_csv(csv_file))
     
-        validate_product_prices(access_token, pd.read_csv(csv_file))
+        validate_product_prices(access_token)
     
     except Exception as e:
         print(f"An error occurred: {e}")
