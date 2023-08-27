@@ -8,8 +8,8 @@ from requests.auth import HTTPBasicAuth
 from oauthlib.oauth2 import BackendApplicationClient
 from requests_oauthlib import OAuth2Session
 
-# API = "https://api-backend-olsgyubl4a-ew.a.run.app"
-API = "http://localhost:5000"
+API = "https://api-backend-olsgyubl4a-ew.a.run.app"
+# API = "http://localhost:5000"
 
 
 class Credentials(BaseModel):
@@ -18,42 +18,46 @@ class Credentials(BaseModel):
 
 
 def authenticate_user(credentials):
-    # try:
-    #     auth = HTTPBasicAuth(credentials.client_id, credentials.client_secret)
-    #     client = BackendApplicationClient(client_id=credentials.client_id)
-    #     oauth = OAuth2Session(client=client)    
-    #     token = oauth.fetch_token(token_url=f"{API}/oauth2/v2.0/token", auth=auth)
-    #     access_token = token["access_token"]
+    if API.startswith("https"):
+        try:
+            auth = HTTPBasicAuth(credentials.client_id, credentials.client_secret)
+            client = BackendApplicationClient(client_id=credentials.client_id)
+            oauth = OAuth2Session(client=client)    
+            token = oauth.fetch_token(token_url=f"{API}/oauth2/v2.0/token", auth=auth)
+            access_token = token["access_token"]
+            print("User Authenticated Successfully!")
+
+            return access_token
+
+        except Exception as e:
+            print(f"Authentication failed {e}")
+            raise
+
+    elif API.startswith("http"):
+        try:
+            auth_resp = requests.post(f"{API}/oauth2/v2.0/token", 
+                auth=HTTPBasicAuth(credentials.client_id, credentials.client_secret))
+            print("User Authenticated Successfully!")
         
-    #     return access_token
-
-    # except Exception as e:
-    #     print(f"Authentication failed {e}")
-    #     raise
-    try:
-        auth_resp = requests.post(f"{API}/oauth2/v2.0/token", 
-              auth=HTTPBasicAuth(credentials.client_id, credentials.client_secret))
-        print("User Authenticated Successfully!")
-    except Exception as e:
-        print(f"Authentication failed {e}")
-        raise
-
-    return auth_resp.json()["access_token"]
+            return auth_resp.json()["access_token"]
+        
+        except Exception as e:
+            print(f"Authentication failed {e}")
+            raise
 
 
 
 # TODO: implement authentication and upload
 def upload_prices(access_token, data: pd.DataFrame):
     print("Uploading Prices...")
-    try:
-                
-        i = 0
+    try:      
+        chunk = 0
         chunk_size = 1_000
 
-        while len(data[i:]):
-            products_list = create_products_list(data[i:i+chunk_size])
+        while len(data[chunk:]):
+            products_list = create_products_list(data[chunk:chunk+chunk_size])
 
-            print(f"Uploading Chunk {i}...")
+            print(f"Uploading Chunk {chunk}...")
             imported = 0
             while imported < len(products_list):
                 resp = requests.post(
@@ -64,10 +68,10 @@ def upload_prices(access_token, data: pd.DataFrame):
                 )
                 imported += resp.json()['num_imported']
             resp.raise_for_status()
-            i += chunk_size
+            chunk += chunk_size
         
-        print("Prices are uploaded sucessfully!")    
-    
+        print("Prices are uploaded sucessfully!")
+
     except Exception as e:
         print(f"Error Uploading prices {e}")
         raise
