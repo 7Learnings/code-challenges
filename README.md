@@ -38,7 +38,8 @@ Your application will be reviewed by our engineers. The aspects of your code we 
 
 ## Links To Team Specific Challenges
 
-- [Data Scientist Challenges](./datascience/README.md)
+- [Data Scientist — Foundational](./datascience/foundational/README.md)
+- [Data Scientist — Intermediate](./datascience/intermediate/README.md)
 - [Front-End Developer Challenge](./frontend/README.md)
 - [DevOps Challenge](./devops/README.md)
 - [API & Backend Developer](./api_backend/README.md)
